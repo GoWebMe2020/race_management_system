@@ -1,0 +1,28 @@
+<h1>Students</h1>
+
+<%= link_to "New Student", new_student_path, class: "btn btn-primary" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @students.each do |student| %>
+      <tr>
+        <td><%= student.name %></td>
+        <td>
+          <%= link_to "Show", student_path(student), class: "btn btn-secondary" %>
+          <%= link_to "Edit", edit_student_path(student), class: "btn btn-warning" %>
+          <%= link_to "Delete", student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @students.empty? %>
+  <p>No students found. Add a new student to get started.</p>
+<% end %>
