@@ -1,4 +1,3 @@
-# Student model test and name must be valid
 require "rails_helper"
 
 RSpec.describe Student, type: :model do
