@@ -64,7 +64,7 @@ RSpec.describe StudentsController, type: :controller do
         }.to change(Student, :count).by(0)
       end
 
-      it "returns a success response (i.e. to display the 'new' template)" do
+      it "returns an unsuccessful response (i.e. to display the 'new' template)" do
         post :create, params: { student: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -82,6 +82,15 @@ RSpec.describe StudentsController, type: :controller do
         put :update, params: { id: student.to_param, student: new_attributes }
         expect(student.reload.name).to eq("Jane Doe")
       end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    it "destroys the requested student" do
+      student = Student.create! valid_attributes
+      expect {
+        delete :destroy, params: { id: student.to_param }
+      }.to change(Student, :count).by(-1)
     end
   end
 end

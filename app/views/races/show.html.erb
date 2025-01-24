@@ -1,0 +1,10 @@
+<h1>Race Details</h1>
+
+<p>
+  <strong>Name:</strong>
+  <%= @race.name %>
+</p>
+
+<%= link_to "Edit", edit_race_path(@race), class: "btn btn-warning" %>
+<%= link_to "Delete", @race, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<%= link_to "Back to Races", races_path, class: "btn btn-secondary" %>

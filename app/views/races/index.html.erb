@@ -1,0 +1,28 @@
+<h1>Races</h1>
+
+<%= link_to "New Race", new_race_path, class: "btn btn-primary" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @races.each do |race| %>
+      <tr>
+        <td><%= race.name %></td>
+        <td>
+          <%= link_to "Show", race_path(race), class: "btn btn-secondary" %>
+          <%= link_to "Edit", edit_race_path(race), class: "btn btn-warning" %>
+          <%= link_to "Delete", race, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @races.empty? %>
+  <p>No races found. Add a new race to get started.</p>
+<% end %>

@@ -1,0 +1,21 @@
+<%= form_with(model: @race, local: true) do |form| %>
+  <div>
+    <%= form.label :name, "Name:" %>
+    <%= form.text_field :name, placeholder: "Enter race name", required: true %>
+  </div>
+
+  <% if @race.errors.any? %>
+    <div class="error-messages">
+      <h2><%= pluralize(@race.errors.count, "error") %> prohibited this race from being saved:</h2>
+      <ul>
+        <% @race.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit(class: "btn btn-primary") %>
+  </div>
+<% end %>
