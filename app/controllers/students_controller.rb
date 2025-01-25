@@ -17,6 +17,7 @@ class StudentsController < ApplicationController
     if @student.save
       redirect_to @student, notice: "Student was successfully created."
     else
+      flash.now[:alert] = "Student was not created. Please try again."
       render :new, status: :unprocessable_entity
     end
   end
@@ -28,6 +29,7 @@ class StudentsController < ApplicationController
     if @student.update(student_params)
       redirect_to @student, notice: "Student was successfully updated."
     else
+      flash.now[:alert] = "Student was not updated. Please try again."
       render :edit, status: :unprocessable_entity
     end
   end

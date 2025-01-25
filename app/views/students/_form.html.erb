@@ -1,9 +1,4 @@
 <%= form_with(model: @student, local: true) do |form| %>
-  <div>
-    <%= form.label :name, "Name:" %>
-    <%= form.text_field :name, placeholder: "Enter student name", required: true %>
-  </div>
-
   <% if @student.errors.any? %>
     <div class="error-messages">
       <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
@@ -14,6 +9,11 @@
       </ul>
     </div>
   <% end %>
+
+  <div>
+    <%= form.label :name, "Name:" %>
+    <%= form.text_field :name, placeholder: "Enter student name" %>
+  </div>
 
   <div>
     <%= form.submit(class: "btn btn-primary") %>

@@ -9,6 +9,7 @@ RSpec.describe StudentsController, type: :controller do
       it "returns a success response" do
         Student.create! valid_attributes
         get :index, params: {}
+
         expect(response).to be_successful
       end
     end
@@ -19,6 +20,7 @@ RSpec.describe StudentsController, type: :controller do
       it "returns a success response" do
         student = Student.create! valid_attributes
         get :show, params: { id: student.to_param }
+
         expect(response).to be_successful
       end
     end
@@ -26,8 +28,9 @@ RSpec.describe StudentsController, type: :controller do
 
   describe "GET #new" do
     context "get a new student's form" do
-        it "returns a success response" do
-          get :new, params: {}
+      it "returns a success response" do
+        get :new, params: {}
+
         expect(response).to be_successful
       end
     end
@@ -38,6 +41,7 @@ RSpec.describe StudentsController, type: :controller do
       it "returns a success response" do
         student = Student.create! valid_attributes
         get :edit, params: { id: student.to_param }
+
         expect(response).to be_successful
       end
     end
@@ -53,6 +57,8 @@ RSpec.describe StudentsController, type: :controller do
 
       it "redirects to the created student" do
         post :create, params: { student: valid_attributes }
+
+        expect(flash.now[:notice]).to eq("Student was successfully created.")
         expect(response).to redirect_to(Student.last)
       end
     end
@@ -66,6 +72,8 @@ RSpec.describe StudentsController, type: :controller do
 
       it "returns an unsuccessful response (i.e. to display the 'new' template)" do
         post :create, params: { student: invalid_attributes }
+
+        expect(flash.now[:alert]).to eq("Student was not created. Please try again.")
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -80,7 +88,19 @@ RSpec.describe StudentsController, type: :controller do
       it "updates the requested student" do
         student = Student.create! valid_attributes
         put :update, params: { id: student.to_param, student: new_attributes }
+
+        expect(flash.now[:notice]).to eq("Student was successfully updated.")
         expect(student.reload.name).to eq("Jane Doe")
+      end
+    end
+
+    context "with invalid params" do
+      it "returns an unsuccessful response (i.e. to display the 'edit' template)" do
+        student = Student.create! valid_attributes
+        put :update, params: { id: student.to_param, student: invalid_attributes }
+
+        expect(flash.now[:alert]).to eq("Student was not updated. Please try again.")
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
@@ -91,6 +111,8 @@ RSpec.describe StudentsController, type: :controller do
       expect {
         delete :destroy, params: { id: student.to_param }
       }.to change(Student, :count).by(-1)
+
+      expect(flash.now[:notice]).to eq("Student was successfully deleted.")
     end
   end
 end

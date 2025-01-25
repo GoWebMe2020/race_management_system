@@ -18,6 +18,7 @@ class RacesController < ApplicationController
     if @race.save
       redirect_to @race, notice: "Race was successfully created."
     else
+      flash.now[:alert] = "Race was not created. Please try again."
       render :new, status: :unprocessable_entity
     end
   end
@@ -29,6 +30,7 @@ class RacesController < ApplicationController
     if @race.update(race_params)
       redirect_to @race, notice: "Race was successfully updated."
     else
+      flash.now[:alert] = "Race was not updated. Please try again."
       render :edit, status: :unprocessable_entity
     end
   end
