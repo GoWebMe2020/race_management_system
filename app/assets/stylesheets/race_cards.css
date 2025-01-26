@@ -1,0 +1,35 @@
+.race_cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.race_card {
+  width: 250px;
+  height: 500px;
+  margin: 2rem;
+  padding: 2rem;
+  border-radius: 50px;
+  background: #e0e0e0;
+  box-shadow:  12px 12px 25px #bebebe,
+              -12px -12px 25px #ffffff;
+  position: relative;
+}
+
+.card_participants p {
+  margin: 0;
+}
+
+.card_actions {
+  width: 80%;
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}

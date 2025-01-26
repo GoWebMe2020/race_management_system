@@ -1,6 +1,9 @@
 <h1>Races</h1>
 
-<%= link_to "New Race", new_race_path, class: "btn btn-primary" %>
+<%= link_to new_race_path, class: "add_btn" do %>
+  <i class="fa-solid fa-plus"></i>
+<% end %>
+
 <section class="race_cards">
   <% @races.each do |race| %>
     <div class="race_card">
@@ -9,35 +12,44 @@
       <p>Number of Participants: <%= race.race_participants.count %></p>
       <h3>Participants</h3>
       <div class="card_participants">
-          <table>
-            <thead>
+        <table>
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Lane</th>
+              <th>Place</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% any_places_completed = race.race_participants.any? { |rp| rp.place.present? } %>
+            <% race.race_participants.each do |race_participant| %>
               <tr>
-                <th>Student</th>
-                <th>Lane</th>
-                <th>Place</th>
+                <td><%= race_participant.student.name %></td>
+                <td><%= race_participant.lane %></td>
+                <td>
+                  <% if !any_places_completed %>
+                    TBD
+                  <% elsif race_participant.place.nil? %>
+                    DNF
+                  <% else %>
+                    <%= race_participant.place %>
+                  <% end %>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              <% race.race_participants.each do |race_participant| %>
-                <tr>
-                  <td><%= race_participant.student.name %></td>
-                  <td><%= race_participant.lane %></td>
-                  <td><%= race_participant.place ? race_participant.place : "TBD" %></td>
-                </tr>
-              <% end %>
-            </tbody>
-        </table>
+            <% end %>
+          </tbody>
+      </table>
       </div>
       <div class="card_actions">
-        <%= link_to race_path(race), class: "btn btn-secondary" do %>
+        <%= link_to race_path(race) do %>
           <i class="fa-solid fa-eye"></i>
         <% end %>
 
-        <%= link_to edit_race_path(race), class: "btn btn-warning" do %>
+        <%= link_to edit_race_path(race) do %>
           <i class="fa-solid fa-pen-to-square"></i>
         <% end %>
 
-        <%= link_to race, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" do %>
+        <%= link_to race, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
           <i class="fa-solid fa-trash-can"></i>
         <% end %>
       </div>

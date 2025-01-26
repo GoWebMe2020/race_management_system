@@ -1,8 +1,10 @@
 <h1>Students</h1>
 
-<%= link_to "New Student", new_student_path, class: "btn btn-primary" %>
+<%= link_to new_student_path, class: "add_btn" do %>
+  <i class="fa-solid fa-plus"></i>
+<% end %>
 
-<table>
+<table class="students_table">
   <thead>
     <tr>
       <th>Name</th>
@@ -13,10 +15,18 @@
     <% @students.each do |student| %>
       <tr>
         <td><%= student.name %></td>
-        <td>
-          <%= link_to "Show", student_path(student), class: "btn btn-secondary" %>
-          <%= link_to "Edit", edit_student_path(student), class: "btn btn-warning" %>
-          <%= link_to "Delete", student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+        <td class="table_actions">
+          <%= link_to student_path(student) do %>
+            <i class="fa-solid fa-eye"></i>
+          <% end %>
+
+          <%= link_to edit_student_path(student) do %>
+            <i class="fa-solid fa-pen-to-square"></i>
+          <% end %>
+
+          <%= link_to student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+            <i class="fa-solid fa-trash-can"></i>
+          <% end %>
         </td>
       </tr>
     <% end %>

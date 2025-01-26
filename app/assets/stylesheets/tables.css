@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+  border: 1px solid #000000;
+}
+
+thead {
+  background-color: #d3d1d1;
+  border: 1px solid #000000;
+  font-weight: bold;
+}
+
+th, td {
+  border: 1px solid #000000;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+th {
+  background-color: #f0f0f0;
+}
+
+td {
+  background-color: #ffffff;
+}
+
+.students_table {
+  margin-top: 3rem;
+}

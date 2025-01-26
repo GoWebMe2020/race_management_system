@@ -1,0 +1,11 @@
+.fa-eye, .fa-pen-to-square, .fa-arrow-left {
+  font-size: 1rem;
+  color: black;
+  font-size: 1.1rem;
+}
+
+.fa-trash-can {
+  font-size: 1rem;
+  color: red;
+  font-size: 1.1rem;
+}
