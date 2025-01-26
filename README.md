@@ -5,14 +5,12 @@ Table of Contents
 * Overview
 * Requirements & Technologies
 * Installation & Setup
-* Running the Application
 * Testing
+* Running the Application
 * Development Process & Justification
-* TDD Approach
 * Data Model & Relationships
 * Tie/No-Gaps Logic
 * Usage Flow
-* Future Improvements
 
 ## Overview
 
