@@ -45,6 +45,14 @@ RSpec.describe Race, type: :model do
       expect(race).to be_valid
     end
 
+    it "is valid when some participants have no place" do
+      race = Race.new(name: "DNF Race")
+      race.race_participants.build(student_id: 1, lane: 1, place: 1)
+      race.race_participants.build(student_id: 2, lane: 2, place: nil)
+      race.race_participants.build(student_id: 3, lane: 3, place: 2)
+      expect(race).to be_valid
+    end
+
     it "is valid with a correct tie-based sequence" do
       race = Race.new(name: "Tie Race")
       race.race_participants.build(student: student1, lane: 1, place: 1)
