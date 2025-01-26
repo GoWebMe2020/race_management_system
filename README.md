@@ -7,10 +7,10 @@ Table of Contents
 * Installation & Setup
 * Testing
 * Running the Application
+* Basic Usage
 * Development Process & Justification
 * Data Model & Relationships
 * Tie/No-Gaps Logic
-* Usage Flow
 
 ## Overview
 
