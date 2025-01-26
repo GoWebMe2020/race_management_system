@@ -29,3 +29,80 @@ body {
   margin: 0;
   margin-bottom: 1rem;
 }
+
+table {
+  width: 100%;
+  border: 1px solid #000000;
+}
+
+thead {
+  background-color: #d3d1d1;
+  border: 1px solid #000000;
+  font-weight: bold;
+}
+
+th, td {
+  border: 1px solid #000000;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+th {
+  background-color: #f0f0f0;
+}
+
+td {
+  background-color: #ffffff;
+}
+
+li {
+  list-style-type: none;
+}
+
+.race_cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.race_card {
+  width: 250px;
+  height: 500px;
+  margin: 2rem;
+  padding: 2rem;
+  border-radius: 50px;
+  background: #e0e0e0;
+  box-shadow:  20px 20px 60px #bebebe,
+              -20px -20px 60px #ffffff;
+  position: relative;
+}
+
+.card_participants p {
+  margin: 0;
+}
+
+.card_actions {
+  width: 80%;
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.fa-eye, .fa-pen-to-square {
+  font-size: 1rem;
+  color: black;
+  font-size: 1.1rem;
+}
+
+.fa-trash-can {
+  font-size: 1rem;
+  color: red;
+  font-size: 1.1rem;
+}

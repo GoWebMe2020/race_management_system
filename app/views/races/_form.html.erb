@@ -15,6 +15,32 @@
     <%= form.text_field :name, placeholder: "Enter race name"%>
   </div>
 
+  <h3>Participants (Lane Assignments)</h3>
+  <%= form.fields_for :race_participants do |rp_form| %>
+    <div class="participant-row">
+      <div>
+        <%= rp_form.label :student_id, "Student" %>
+        <%= rp_form.collection_select :student_id, Student.all, :id, :name, include_blank: true %>
+      </div>
+
+      <div>
+        <%= rp_form.label :lane, "Lane" %>
+        <%= rp_form.number_field :lane %>
+      </div>
+
+      <div>
+        <%= rp_form.label :place, "Place" %>
+        <%= rp_form.number_field :place %>
+      </div>
+
+      <div class="remove-participant">
+        <%= rp_form.check_box :_destroy %>
+        <%= rp_form.label :_destroy, "Remove this participant" %>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+
   <div>
     <%= form.submit(class: "btn btn-primary") %>
   </div>

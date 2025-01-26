@@ -2,5 +2,5 @@ Rails.application.routes.draw do
   resources :races
   resources :students
 
-  root "students#index"
+  root "races#index"
 end

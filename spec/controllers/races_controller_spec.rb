@@ -1,8 +1,25 @@
 require "rails_helper"
 
 RSpec.describe RacesController, type: :controller do
-  let(:valid_attributes) { { name: "5K" } }
-  let(:invalid_attributes) { { name: nil } }
+  let(:student1) { Student.create!(name: "Alice") }
+  let(:student2) { Student.create!(name: "Bob") }
+  let(:valid_attributes) do
+    {
+      name: "5K",
+      race_participants_attributes: [
+        { student_id: student1.id, lane: 1 },
+        { student_id: student2.id, lane: 2 }
+      ]
+    }
+  end
+  let(:invalid_attributes) do
+    {
+      name: "5K",
+      race_participants_attributes: [
+        { student_id: student1.id, lane: 1 }
+      ]
+    }
+  end
 
   describe "GET #index" do
     context "get all races" do
@@ -52,16 +69,17 @@ RSpec.describe RacesController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new race" do
+      it "creates a new race and two race_participants" do
         expect {
           post :create, params: { race: valid_attributes }
         }.to change(Race, :count).by(1)
+          .and change(RaceParticipant, :count).by(2)
       end
 
       it "redirects to the created race" do
         post :create, params: { race: valid_attributes }
 
-        expect(flash.now[:notice]).to eq("Race was successfully created.")
+        expect(flash[:notice]).to eq("Race was successfully created.")
         expect(response).to redirect_to(Race.last)
       end
     end
@@ -70,7 +88,9 @@ RSpec.describe RacesController, type: :controller do
       it "does not create a new race" do
         expect {
           post :create, params: { race: invalid_attributes }
-        }.to change(Race, :count).by(0)
+        }.not_to change(Race, :count)
+
+        expect(RaceParticipant.count).to eq(0)
       end
 
       it "returns an unsuccessful response" do
@@ -78,6 +98,14 @@ RSpec.describe RacesController, type: :controller do
 
         expect(flash.now[:alert]).to eq("Race was not created. Please try again.")
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "requires at least 2 participants" do
+        race = Race.new(name: "Some Race")
+        race.race_participants.build(student_id: student1.id, lane: 1)
+
+        expect(race).not_to be_valid
+        expect(race.errors[:base]).to include("A race must have at least two participants.")
       end
     end
   end
@@ -91,7 +119,7 @@ RSpec.describe RacesController, type: :controller do
 
         put :update, params: { id: race.to_param, race: new_attributes }
 
-        expect(flash.now[:notice]).to eq("Race was successfully updated.")
+        expect(flash[:notice]).to eq("Race was successfully updated.")
         expect(race.reload.name).to eq("10K")
       end
     end
@@ -115,7 +143,7 @@ RSpec.describe RacesController, type: :controller do
       expect {
         delete :destroy, params: { id: race.to_param }
       }.to change(Race, :count).by(-1)
-      expect(flash.now[:notice]).to eq("Race was successfully destroyed.")
+      expect(flash[:notice]).to eq("Race was successfully destroyed.")
     end
   end
 end

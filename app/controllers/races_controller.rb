@@ -10,6 +10,7 @@ class RacesController < ApplicationController
 
   def new
     @race = Race.new
+    8.times { @race.race_participants.build }
   end
 
   def create
@@ -18,12 +19,13 @@ class RacesController < ApplicationController
     if @race.save
       redirect_to @race, notice: "Race was successfully created."
     else
-      flash.now[:alert] = "Race was not created. Please try again."
+      flash[:alert] = "Race was not created. Please try again."
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
+    (8 - @race.race_participants.size).times { @race.race_participants.build } if @race.race_participants.size < 8
   end
 
   def update
@@ -48,6 +50,9 @@ class RacesController < ApplicationController
   end
 
   def race_params
-    params.require(:race).permit(:name, :string)
+    params.require(:race).permit(
+      :name,
+      race_participants_attributes: [:id, :student_id, :lane, :place, :_destroy]
+    )
   end
 end
