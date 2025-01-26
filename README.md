@@ -47,8 +47,8 @@ This application is a Ruby on Rails project that manages student race day events
 **Clone the Repository**
 
 ```cli
-git clone https://github.com/your-username/liveheats_race_manager.git
-cd liveheats_race_manager
+git clone https://github.com/GoWebMe2020/race_management_system.git
+cd race_management_system
 ```
 
 **Install Ruby Gems**

@@ -5,6 +5,6 @@
   <%= @student.name %>
 </p>
 
-<%= link_to "Edit", edit_student_path(@student), class: "btn btn-warning" %>
-<%= link_to "Delete", @student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
-<%= link_to "Back to Students", students_path, class: "btn btn-secondary" %>
+<%= link_to "Edit", edit_student_path(@student), title: "Edit Student", aria_label: "Edit Student" %>
+<%= link_to "Delete", @student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, title: "Delete Student", aria_label: "Delete Student" %>
+<%= link_to "Back to Students", students_path, title: "Back to Students", aria_label: "Back to Students" %>

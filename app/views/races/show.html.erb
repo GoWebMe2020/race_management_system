@@ -32,15 +32,15 @@
 <% end %>
 
 <div class="show_actions">
-  <%= link_to edit_race_path(@race) do %>
-    <i class="fa-solid fa-pen-to-square" aria-describedby="race-tooltip"></i>
+  <%= link_to edit_race_path(@race), title: "Edit Race", aria_label: "Edit Race" do %>
+    <i class="fa-solid fa-pen-to-square"></i>
   <% end %>
 
-  <%= link_to @race, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+  <%= link_to @race, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, title: "Delete Race", aria_label: "Delete Race" do %>
     <i class="fa-solid fa-trash-can"></i>
   <% end %>
 
-  <%= link_to races_path do %>
+  <%= link_to races_path , title: "Back to Races", aria_label: "Back to Races" do %>
     <i class="fa-solid fa-arrow-left"></i>
   <% end %>
 </div>

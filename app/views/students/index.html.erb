@@ -16,15 +16,15 @@
       <tr>
         <td><%= student.name %></td>
         <td class="table_actions">
-          <%= link_to student_path(student) do %>
+          <%= link_to student_path(student, title: "Visit Student", aria_label: "Visit Students") do %>
             <i class="fa-solid fa-eye"></i>
           <% end %>
 
-          <%= link_to edit_student_path(student) do %>
+          <%= link_to edit_student_path(student), title: "Edit Student", aria_label: "Edit Student" do %>
             <i class="fa-solid fa-pen-to-square"></i>
           <% end %>
 
-          <%= link_to student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+          <%= link_to student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, title: "Delete Student", aria_label: "Delete Student" do %>
             <i class="fa-solid fa-trash-can"></i>
           <% end %>
         </td>

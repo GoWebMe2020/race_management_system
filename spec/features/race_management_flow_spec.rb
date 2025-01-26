@@ -23,7 +23,7 @@ RSpec.describe "Race management flow", type: :feature do
     expect(page).to have_content("Alice")
     expect(page).to have_content("Bob")
 
-    click_link "Edit"
+    click_link "Edit Race"
     within all(".participant-row")[0] do
       fill_in "Place", with: "1"
     end
