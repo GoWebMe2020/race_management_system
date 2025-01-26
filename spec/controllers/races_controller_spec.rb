@@ -108,6 +108,42 @@ RSpec.describe RacesController, type: :controller do
         expect(race.errors[:base]).to include("A race must have at least two participants.")
       end
     end
+
+    context "with duplicate lane or student assignments" do
+      it "does not create a race when two students are assigned to the same lane" do
+        conflicting_attributes = {
+          name: "Conflicting Race",
+          race_participants_attributes: [
+            { student_id: student1.id, lane: 1 },
+            { student_id: student2.id, lane: 1 }
+          ]
+        }
+
+        expect {
+          post :create, params: { race: conflicting_attributes }
+        }.not_to change(Race, :count)
+
+        expect(flash.now[:alert]).to eq("A race participant with the same lane or student already exists.")
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "does not create a race when the same student is assigned to multiple lanes" do
+        conflicting_attributes = {
+          name: "Conflicting Race",
+          race_participants_attributes: [
+            { student_id: student1.id, lane: 1 },
+            { student_id: student1.id, lane: 2 }
+          ]
+        }
+
+        expect {
+          post :create, params: { race: conflicting_attributes }
+        }.not_to change(Race, :count)
+
+        expect(flash.now[:alert]).to eq("A race participant with the same lane or student already exists.")
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
   end
 
   describe "PUT #update" do
@@ -134,7 +170,44 @@ RSpec.describe RacesController, type: :controller do
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
+
+    context "with duplicate lane or student assignments" do
+      it "does not update the race when two students are assigned to the same lane" do
+        race = Race.create!(valid_attributes)
+
+        duplicate_attributes = {
+          name: "Updated Race",
+          race_participants_attributes: [
+            { id: race.race_participants.first.id, student_id: student1.id, lane: 1 },
+            { id: race.race_participants.last.id, student_id: student2.id, lane: 1 } # Same lane as student1
+          ]
+        }
+
+        put :update, params: { id: race.to_param, race: duplicate_attributes }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(race.reload.name).not_to eq("Updated Race")
+      end
+
+      it "does not update the race when the same student is assigned to multiple lanes" do
+        race = Race.create!(valid_attributes)
+
+        duplicate_attributes = {
+          name: "Updated Race",
+          race_participants_attributes: [
+            { id: race.race_participants.first.id, student_id: student1.id, lane: 1 },
+            { id: race.race_participants.last.id, student_id: student1.id, lane: 2 }
+          ]
+        }
+
+        put :update, params: { id: race.to_param, race: duplicate_attributes }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(race.reload.name).not_to eq("Updated Race")
+      end
+    end
   end
+
 
   describe "DELETE #destroy" do
     it "destroys the requested race" do

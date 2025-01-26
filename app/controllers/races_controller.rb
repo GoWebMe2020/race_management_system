@@ -35,6 +35,12 @@ class RacesController < ApplicationController
       flash[:alert] = "Race was not created. Please try again."
       render :new, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotUnique
+    # Handle unique constraint violations (e.g., duplicate lane or student within the same race).
+    # Rebuild the form and display a user-friendly error message.
+    @race ||= Race.new(race_params) # Ensure @race is not nil
+    flash.now[:alert] = "A race participant with the same lane or student already exists."
+    render :new, status: :unprocessable_entity
   end
 
   # GET /races/:id/edit
@@ -55,6 +61,11 @@ class RacesController < ApplicationController
       flash.now[:alert] = "Race was not updated. Please try again."
       render :edit, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotUnique
+    # Handle unique constraint violations (e.g., duplicate lane or student within the same race).
+    # Rebuild the form and display a user-friendly error message.
+    flash.now[:alert] = "A race participant with the same lane or student already exists."
+    render :edit, status: :unprocessable_entity
   end
 
   # DELETE /races/:id
