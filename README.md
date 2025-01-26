@@ -83,10 +83,14 @@ You should see all specs passing if everything is set up correctly.
 
 ```
 % rspec
-...............................
+.......................Capybara starting Puma...
+* Version 6.5.0, codename: Sky's Version
+* Min threads: 0, max threads: 4
+* Listening on http://127.0.0.1:64573
+.........
 
-Finished in 0.14268 seconds (files took 0.92827 seconds to load)
-31 examples, 0 failures
+Finished in 2.17 seconds (files took 0.67676 seconds to load)
+32 examples, 0 failures
 ```
 
 ## Running the Application
